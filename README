@@ -1,0 +1,9 @@
+Library for validating Singaporean FIN and NRIC
+===============================================
+
+National Registration Identity Card and Foreign Identification Number
+http://en.wikipedia.org/wiki/National_Registration_Identity_Card
+
+This library helps check that the input is valid as far as matching the algorithm, it does not mean that FIN or NRIC is valid.
+
+Based on http://www.ngiam.net/NRIC/ppframe.htm
