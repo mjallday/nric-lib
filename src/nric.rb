@@ -16,18 +16,18 @@ class NRICValidator
         return false if not ['S', 'T'].include?(first)
 
         begin
-            numericNric = the_nric[1..the_nric.length - 2].to_i
+            numeric_nric = the_nric[1..the_nric.length - 2].to_i
         rescue
             return false
         end
 
-        while numericNric != 0
-            total += (numericNric % 10) * @@multiples[@@multiples.length - (1 + count)]
+        while numeric_nric != 0
+            total += (numeric_nric % 10) * @@multiples[@@multiples.length - (1 + count)]
 
             count += 1
 
-            numericNric /= 10
-            numericNric = numericNric.floor
+            numeric_nric /= 10
+            numeric_nric = numeric_nric.floor
         end
 
         if first == 'S' then
@@ -53,18 +53,18 @@ class NRICValidator
         return false if not ['F', 'G'].include?(first)
 
         begin
-            numericNric = fin[1..fin.length - 2].to_i
+            numeric_nric = fin[1..fin.length - 2].to_i
         rescue
             return false
         end
 
-        while numericNric != 0
-            total += (numericNric % 10) * @@multiples[@@multiples.length - (1 + count)]
+        while numeric_nric != 0
+            total += (numeric_nric % 10) * @@multiples[@@multiples.length - (1 + count)]
 
             count += 1
 
-            numericNric /= 10
-            numericNric = numericNric.floor
+            numeric_nric /= 10
+            numeric_nric = numeric_nric.floor
         end
 
         if first == 'F' then
@@ -78,8 +78,6 @@ class NRICValidator
     end
 
 end
-
-
 
 class TestSimpleNumber < Test::Unit::TestCase
 
