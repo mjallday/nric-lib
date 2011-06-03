@@ -28,21 +28,21 @@ class NRICValidator(object):
         first = the_nric[0]
         last = the_nric[-1];
     
-        if first != 'S' and first != 'T':
+        if first not in ['S','T']:
             return False
     
         try:
-            numericNric = int(the_nric[1:-1])
+            numeric_nric = int(the_nric[1:-1])
         except ValueError:
             return False
     
-        while numericNric != 0:
-            total += (numericNric % 10) * self.multiples[len(self.multiples) - (1 + count)]
+        while numeric_nric != 0:
+            total += (numeric_nric % 10) * self.multiples[len(self.multiples) - (1 + count)]
             
             count += 1
     
-            numericNric /= 10
-            numericNric = floor(numericNric)
+            numeric_nric /= 10
+            numeric_nric = floor(numeric_nric)
                 
         if first == 'S':
             outputs = [ 'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' ]
@@ -64,21 +64,21 @@ class NRICValidator(object):
         first = fin[0]
         last = fin[-1]
     
-        if first != 'F' and first != 'G':
+        if first not in ['F', 'G']:
             return False
 
         try:
-            numericNric = int(fin[1:-1])
+            numeric_nric = int(fin[1:-1])
         except ValueError:
             return False
             
-        while numericNric != 0:
-            total += (numericNric % 10) * self.multiples[len(self.multiples) - (1 + count)]
+        while numeric_nric != 0:
+            total += (numeric_nric % 10) * self.multiples[len(self.multiples) - (1 + count)]
             
             count += 1
     
-            numericNric /= 10
-            numericNric = floor(numericNric)
+            numeric_nric /= 10
+            numeric_nric = floor(numeric_nric)
     
         if first == 'F':
             outputs = [ 'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K' ]
