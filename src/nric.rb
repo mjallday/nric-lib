@@ -9,25 +9,15 @@ class NRICValidator
         return false if not the_nric
         return false if the_nric.length != 9
 
-        total = count = 0
         first = the_nric[0]
         last = the_nric[the_nric.length - 1];
 
         return false if not ['S', 'T'].include?(first)
 
         begin
-            numeric_nric = the_nric[1..the_nric.length - 2].to_i
+            numeric = the_nric[1..the_nric.length - 2].to_i
         rescue
             return false
-        end
-
-        while numeric_nric != 0
-            total += (numeric_nric % 10) * @@multiples[@@multiples.length - (1 + count)]
-
-            count += 1
-
-            numeric_nric /= 10
-            numeric_nric = numeric_nric.floor
         end
 
         if first == 'S' then
@@ -36,7 +26,7 @@ class NRICValidator
             outputs = [ 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H' ]
         end
 
-        return last == outputs[(total % 11).floor]
+        return check_mod_11(first, last, numeric, outputs)
 
     end
 
@@ -45,18 +35,30 @@ class NRICValidator
         return false if not fin
         return false if fin.length != 9
 
-
-        total = count = 0
         first = fin[0]
         last = fin[fin.length - 1]
 
         return false if not ['F', 'G'].include?(first)
 
         begin
-            numeric_nric = fin[1..fin.length - 2].to_i
+            numeric = fin[1..fin.length - 2].to_i
         rescue
             return false
         end
+
+        if first == 'F' then
+            outputs = [ 'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K' ]
+        else
+            outputs = [ 'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T' ]
+        end
+
+        return check_mod_11(first, last, numeric, outputs)
+
+    end
+
+    def check_mod_11(first, last, numeric_nric, outputs)
+
+        total = count = 0
 
         while numeric_nric != 0
             total += (numeric_nric % 10) * @@multiples[@@multiples.length - (1 + count)]
@@ -65,12 +67,6 @@ class NRICValidator
 
             numeric_nric /= 10
             numeric_nric = numeric_nric.floor
-        end
-
-        if first == 'F' then
-            outputs = [ 'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K' ]
-        else
-            outputs = [ 'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T' ]
         end
 
         return last == outputs[(total % 11).floor]
@@ -84,7 +80,6 @@ class TestSimpleNumber < Test::Unit::TestCase
     def test_fin
         v = NRICValidator.new
 
-        puts 'unit test'
         assert_equal(true,  v.is_fin_valid('G6046409Q') )
         assert_equal(false, v.is_fin_valid('G60g6409Q') )
         assert_equal(false, v.is_fin_valid('123') )
@@ -93,7 +88,7 @@ class TestSimpleNumber < Test::Unit::TestCase
 
     def test_nric
         v = NRICValidator.new
-        puts 'unit test'
+
         assert_equal(true,  v.is_nric_valid('S8944027J') )
         assert_equal(false, v.is_nric_valid('G60g2119Q') )
         assert_equal(false, v.is_nric_valid('123') )
