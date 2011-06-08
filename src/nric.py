@@ -12,7 +12,10 @@ class NRICValidator(object):
     False
     >>> NRICValidator().is_fin_valid('G6075119Q')
     False
-    
+    >>> NRICValidator().is_nric_valid('123')
+    False
+    >>> NRICValidator().is_fin_valid('123')
+    False
     """
     multiples = [ 2, 7, 6, 5, 4, 3, 2 ]
 
@@ -24,7 +27,6 @@ class NRICValidator(object):
         if len(the_nric) != 9:
             return False;
     
-        total = count = 0
         first = the_nric[0]
         last = the_nric[-1];
     
@@ -32,26 +34,17 @@ class NRICValidator(object):
             return False
     
         try:
-            numeric_nric = int(the_nric[1:-1])
+            numeric = int(the_nric[1:-1])
         except ValueError:
             return False
-    
-        while numeric_nric != 0:
-            total += (numeric_nric % 10) * self.multiples[len(self.multiples) - (1 + count)]
-            
-            count += 1
-    
-            numeric_nric /= 10
-            numeric_nric = floor(numeric_nric)
                 
         if first == 'S':
             outputs = [ 'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' ]
         else:
             outputs = [ 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H' ]
     
-        return last == outputs[int(total % 11)]
-    
-
+        return self.check_mod_11(last, numeric, outputs)
+        
     def is_fin_valid (self, fin):
         
         if not fin:
@@ -60,7 +53,6 @@ class NRICValidator(object):
         if len(fin) != 9:
             return False
     
-        total = count = 0
         first = fin[0]
         last = fin[-1]
     
@@ -68,23 +60,29 @@ class NRICValidator(object):
             return False
 
         try:
-            numeric_nric = int(fin[1:-1])
+            numeric = int(fin[1:-1])
         except ValueError:
             return False
-            
-        while numeric_nric != 0:
-            total += (numeric_nric % 10) * self.multiples[len(self.multiples) - (1 + count)]
-            
-            count += 1
-    
-            numeric_nric /= 10
-            numeric_nric = floor(numeric_nric)
     
         if first == 'F':
             outputs = [ 'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K' ]
         else:
             outputs = [ 'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T' ]
     
+        return self.check_mod_11(last, numeric, outputs)
+        
+    def check_mod_11(self, last, numeric, outputs):
+
+        total = count = 0
+ 
+        while numeric != 0:
+            total += (numeric % 10) * self.multiples[len(self.multiples) - (1 + count)]
+            
+            count += 1
+    
+            numeric /= 10
+            numeric = floor(numeric)
+        
         return last == outputs[int(total % 11)]
 
 if __name__ == "__main__":
