@@ -99,27 +99,23 @@ int check_mod_11 (char* last, int numeric, int outputs[]) {
 
 main() {
 
-	int a = is_nric_valid("G6072119Q");
+	int a = is_nric_valid("G6046409Q");
 
-	printf("A %d\n", a);
+	printf("0 == %d\n", a);
 
 	a = is_nric_valid("S8944027J");
 
-	printf("A %d\n", a);
-
-	a = is_fin_valid("G6072119Q");
-
-	printf("A %d\n", a);
+	printf("1 == %d\n", a);
 
 	a = is_fin_valid("G6046409Q");
 
-	printf("A %d\n", a);
+	printf("1 == %d\n", a);
 
 	a = is_fin_valid("G604a409Q");
 
-	printf("A %d\n", a);
+	printf("0 == %d\n", a);
 
 	a = is_nric_valid("G604a409Q");
 
-	printf("A %d\n", a);
+	printf("0 == %d\n", a);
 }
