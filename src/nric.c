@@ -4,15 +4,15 @@
 
 int multiples[7] = { 2, 7, 6, 5, 4, 3, 2 };
 
-int is_nric_valid(char the_nric[]) {
-	char first;
-	char last;
+int is_nric_valid(char* the_nric) {
+	char* first;
+	char* last;
 
 	int numeric;
 	int i;
-	int outputs[11] = { 'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
-	int outputs2[11] = { 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H' };
-	int *output;
+	char outputs[11] = { 'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
+	char outputs2[11] = { 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H' };
+	char *output;
 
 	if (the_nric == NULL) {
 		return 0;
@@ -22,16 +22,16 @@ int is_nric_valid(char the_nric[]) {
 		return 0;
 	}
 
-	first = the_nric[0];
-	last = the_nric[strlen(the_nric) - 1];
+	first = &the_nric[0];
+	last = &the_nric[strlen(the_nric) - 1];
 
-	if (first != 'S' && first != 'T') {
+	if (*first != 'S' && *first != 'T') {
 		return 0;
 	}
 
 	numeric = atoi(&the_nric[1]);
 
-	if (first == 'S') {
+	if (*first == 'S') {
 		output = outputs;
 	} else {
 		output = outputs2;
@@ -41,15 +41,15 @@ int is_nric_valid(char the_nric[]) {
 
 }
 
-int is_fin_valid(char the_fin[]) {
-	char first;
-	char last;
+int is_fin_valid(char* the_fin) {
+	char* first;
+	char* last;
 
 	int numeric;
 	int i;
-	int outputs[11] = {  'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K' };
-	int outputs2[11] = { 'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T' };
-	int* output;
+	char outputs[11] = {  'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K' };
+	char outputs2[11] = { 'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T' };
+	char* output;
 
 	if (the_fin == NULL) {
 		return 0;
@@ -59,16 +59,16 @@ int is_fin_valid(char the_fin[]) {
 		return 0;
 	}
 
-	first = the_fin[0];
-	last = the_fin[strlen(the_fin) - 1];
+	first = &the_fin[0];
+	last = &the_fin[strlen(the_fin) - 1];
 
-	if (first != 'F' && first != 'G') {
+	if (*first != 'F' && *first != 'G') {
 		return 0;
 	}
 
 	numeric = atoi(&the_fin[1]);
 
-	if (first == 'F') {
+	if (*first == 'F') {
 		output = outputs;
 	} else {
 		output = outputs2;
@@ -78,7 +78,7 @@ int is_fin_valid(char the_fin[]) {
 
 }
 
-int check_mod_11 (char* last, int numeric, int outputs[]) {
+int check_mod_11 (char* last, int numeric, char* outputs) {
 	int total = 0;
 	int count = 0;
 	int len = 7;
@@ -90,7 +90,7 @@ int check_mod_11 (char* last, int numeric, int outputs[]) {
 		numeric /= 10;
 	}
 
-	if (last == outputs[total % 11]) {
+	if (*last == outputs[total % 11]) {
 		return 1;
 	}
 
