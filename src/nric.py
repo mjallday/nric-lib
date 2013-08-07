@@ -18,6 +18,16 @@ class NRICValidator(object):
     False
     """
     multiples = [ 2, 7, 6, 5, 4, 3, 2 ]
+    
+    @classmethod
+    def is_valid(cls, nric_or_fin):
+        validator = cls()
+        if validator.is_nric_valid(nric_or_fin):
+            return True
+        elif validator.is_fin_valid(nric_or_fin):
+            return True
+        else:
+            return False
 
     def is_nric_valid(self, the_nric):
     
