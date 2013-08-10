@@ -1,23 +1,24 @@
 from math import floor
 
+
 class NRICValidator(object):
     """
     Validates a Singaporean FIN or NRIC to ensure that it's algorithmically correct
     
-    >>> NRICValidator().is_nric_valid('S8944027J')
+    >>> NRICValidator.is_nric_valid('S8944027J')
     True
-    >>> NRICValidator().is_fin_valid('G6046409Q')
+    >>> NRICValidator.is_fin_valid('G6046409Q')
     True
-    >>> NRICValidator().is_nric_valid('S814A299Z')
+    >>> NRICValidator.is_nric_valid('S814A299Z')
     False
-    >>> NRICValidator().is_fin_valid('G6075119Q')
+    >>> NRICValidator.is_fin_valid('G6075119Q')
     False
-    >>> NRICValidator().is_nric_valid('123')
+    >>> NRICValidator.is_nric_valid('123')
     False
-    >>> NRICValidator().is_fin_valid('123')
+    >>> NRICValidator.is_fin_valid('123')
     False
     """
-    multiples = [ 2, 7, 6, 5, 4, 3, 2 ]
+    multiples = [2, 7, 6, 5, 4, 3, 2]
     
     @classmethod
     def is_valid(cls, nric_or_fin):
@@ -29,7 +30,8 @@ class NRICValidator(object):
         else:
             return False
 
-    def is_nric_valid(self, the_nric):
+    @classmethod
+    def is_nric_valid(cls, the_nric):
     
         if not the_nric:
             return False
@@ -49,13 +51,14 @@ class NRICValidator(object):
             return False
                 
         if first == 'S':
-            outputs = [ 'J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' ]
+            outputs = ['J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A']
         else:
-            outputs = [ 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H' ]
+            outputs = ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'J', 'Z', 'I', 'H']
     
-        return self.check_mod_11(last, numeric, outputs)
+        return cls.check_mod_11(last, numeric, outputs)
         
-    def is_fin_valid (self, fin):
+    @classmethod
+    def is_fin_valid (cls, fin):
         
         if not fin:
             return False
@@ -75,13 +78,14 @@ class NRICValidator(object):
             return False
     
         if first == 'F':
-            outputs = [ 'X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K' ]
+            outputs = ['X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K']
         else:
-            outputs = [ 'R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T' ]
+            outputs = ['R', 'Q', 'P', 'N', 'M', 'L', 'K', 'X', 'W', 'U', 'T']
     
-        return self.check_mod_11(last, numeric, outputs)
+        return cls.check_mod_11(last, numeric, outputs)
         
-    def check_mod_11(self, last, numeric, outputs):
+    @classmethod
+    def check_mod_11(cls, last, numeric, outputs):
 
         total = count = 0
  
@@ -94,6 +98,7 @@ class NRICValidator(object):
             numeric = floor(numeric)
         
         return last == outputs[int(total % 11)]
+
 
 if __name__ == "__main__":
     import doctest
