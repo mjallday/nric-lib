@@ -90,7 +90,7 @@ class NRICValidator(object):
         total = count = 0
  
         while numeric != 0:
-            total += (numeric % 10) * self.multiples[len(self.multiples) - (1 + count)]
+            total += (numeric % 10) * cls.multiples[len(cls.multiples) - (1 + count)]
             
             count += 1
     
